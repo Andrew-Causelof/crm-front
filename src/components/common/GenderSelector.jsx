@@ -2,17 +2,13 @@ import React, { useEffect } from 'react';
 import InputField from '../common/InputField';
 import PropTypes from 'prop-types';
 import { useGenderStore } from '../../store';
+import { useUserStore } from '../../store';
 
 export default function GenderSelector() {
-    const { selectedGender, setGender, initializeGender } = useGenderStore();
-
-    // Инициализируем состояние только один раз при первом рендере
-    useEffect(() => {
-        initializeGender(selectedGender || ''); // Установите из Zustand или оставьте пустым
-    }, [initializeGender]);
+    const { userData, setUserData } = useUserStore();
 
     const handleChange = (e) => {
-        setGender(e.target.value); // Обновляем состояние через Zustand
+        setUserData("gender", e.target.value); // Обновляем поле gender
     };
 
     return (
@@ -27,7 +23,7 @@ export default function GenderSelector() {
                             name="sex"
                             value="male"
                             onChange={handleChange}
-                            checked={selectedGender === 'male'} // Привязка к состоянию из Zustand
+                            checked={userData.gender === "male"}  // Привязка к состоянию из Zustand
                         />
                         <div className="checkbox_cell"></div>
                         <span>Мужской</span>
@@ -39,7 +35,7 @@ export default function GenderSelector() {
                             name="sex"
                             value="fem"
                             onChange={handleChange}
-                            checked={selectedGender === 'fem'} // Привязка к состоянию из Zustand
+                            checked={userData.gender === "fem"} // Привязка к состоянию из Zustand
                         />
                         <div className="checkbox_cell"></div>
                         <span>Женский</span>

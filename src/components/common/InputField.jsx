@@ -1,30 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 
 export default function InputField({
     id,
     name,
     value,
-    defaultValue,
+    // defaultValue,
     placeholder,
     onChange,
     disabled = false,
     type = 'text',
-    className,
+    className = '',
     readOnly = false,
     checked
 }) {
+
+    const [validationClass, setValidationClass] = useState('');
+
+    //проверка на пустое поле
+    const validateField = (fieldValue) => {
+        return fieldValue && fieldValue.trim() !== '';
+    }
+
+    const handleChange = (e) => {
+        const currentValue = e.target.value;
+
+        if (onChange) {
+            onChange(e, currentValue);
+        }
+
+        setValidationClass(validateField(currentValue) ? 'ok' : 'err');
+    }
+
+    useEffect(() => {
+        setValidationClass(validateField(value) ? 'ok' : 'err');
+    }, [value]);
+
     return (
         <input
             id={id}
             name={name}
             value={value}
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
             placeholder={placeholder}
             onChange={onChange}
             disabled={disabled}
             type={type}
-            className={className}
+            className={`${className} ${validationClass}`}
             readOnly={readOnly}
             checked={checked}
         />
