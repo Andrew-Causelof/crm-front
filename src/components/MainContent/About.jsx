@@ -8,6 +8,9 @@ import SingleSelector from "../common/SingleSelector";
 import { useUserStore } from "../../store";
 import regions from "../../data/regions.json";
 import Description from "../common/Description";
+import AsideProgress from '../common/AsideProgress';
+import { useTabStore } from '../../store';
+import Breadcrumbs from '../common/Breadcrumbs';
 
 export default function About() {
     const { userData, setUserData, loadUserData, saveUserData } = useUserStore();
@@ -37,16 +40,14 @@ export default function About() {
       console.log(newSelection);
     };
 
+    const { activeTab, setActiveTab } = useTabStore();
+
 
     return (
         <form className="main">
             <div className="content">
                 <div className="content_head">
-                    <div className="breadcrumbs">
-                        <a href="client.html" className="breadcrumbs_link">Личный кабинет</a>
-                        <span className="breadcrumbs_sep">/</span>
-                        <span className="breadcrumbs_text">Информация о клиенте</span>
-                    </div>
+                    <Breadcrumbs current='Информация о клиенте' />
                     <div className="title title-page">Информация о пациенте</div>
                 </div>
                 <div className="content_body">
@@ -185,15 +186,7 @@ export default function About() {
                                         className="control_title control_title-notice"
                                         htmlFor="polis"
                                     >Номер страхового полиса
-                                        {/* <div className="control_notice">
-                                            <span className="control_notice_icon"></span>
-                                            <div className="control_notice_content">
-                                                <p>
-                                                    Далеко-далеко за словесными горами в стране гласных, и согласных живут
-                                                    рыбные тексты.
-                                                </p>
-                                            </div>
-                                        </div> */}
+
                                         <Description tag="polisTag" />
                                         
                                         </label>
@@ -308,36 +301,12 @@ export default function About() {
                     </article>
                 </div>
             </div>
-            <aside className="aside aside-right">
-                <div className="widget">
-                    <div className="widget_title">Информация</div>
-                    <div
-                        className="progress progress-dark"
-                        data-progress="about"
-                    >
-                        <div className="progress_bar">
-                            <span
-                                className="progress_line"
-                                style={{ width: '50%' }}
-                            ></span>
-                        </div>
-                        <p className="progress_text">Заполнено <span className="progress_value">50%</span></p>
-                    </div>
-                    <div className="widget_actions">
-                        <button
-                            type="submit"
-                            className="btn btn-main btn-fw"
-                        >
-                            Сохранить
-                        </button>
-                        <a
-                            href="info.html"
-                            className="btn btn-main btn-fw"
-                        >Далее</a
-                        >
-                    </div>
-                </div>
-            </aside>
+            <AsideProgress 
+                title="Информация" 
+                progress="60" 
+                onClick={() => setActiveTab('info')}
+            />
+            
         </form>
     )
 }

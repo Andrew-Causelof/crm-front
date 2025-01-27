@@ -7,7 +7,7 @@ import MultipleSelector from "../common/MultipleSelector";
 import Description from "../common/Description";
 import TextAreaField from "../common/TextAreaField";
 import SelectorWithComments from "../common/SelectorWithComments";
-import InfoArticle from '../common/InfoArticle';
+import InfoArticle from "../common/InfoArticle";
 
 import ErrorBoundary from "../../tools/ErrorBoundary";
 
@@ -16,255 +16,123 @@ import medications from "../../data/medicationList.json";
 import alergy from "../../data/alergyList.json";
 import infection from "../../data/infectionList.json";
 import badHabbits from "../../data/badHabbitsList.json";
+import { useTabStore } from '../../store';
+import AsideProgress from '../common/AsideProgress';
+import Breadcrumbs from '../common/Breadcrumbs';
 
 export default function Info() {
 
     const { userData, setUserData, loadUserData, saveUserData } = useUserStore();
-
+    const { activeTab, setActiveTab } = useTabStore();
     console.log(userData);
 
     return (
         <form className="main">
             <div className="content">
                 <div className="content_head">
-
-                    <div className="breadcrumbs">
-                        <a href="client.html" className="breadcrumbs_link">Личный кабинет</a>
-                        <span className="breadcrumbs_sep">/</span>
-                        <span className="breadcrumbs_text">Медицинская информация</span>
-                    </div>
-
+                    <Breadcrumbs current='Медицинская информация' />
                     <div className="title title-page">Медицинская информация</div>
-
                 </div>
                 <div className="content_body">
-                <InfoArticle
-                    title="Жалобы"
-                    descriptionTag="commentTag"
-                    fieldName="comment"
-                    useTextArea
-                    textAreaPlaceholder="Опишите, пожалуйста, основное, что вас беспокоит"
-                />
 
 
+                    <InfoArticle article="Жалобы">
+                        <Description tag="commentTag" title="Жалобы на здоровье" />
+                        <TextAreaField
+                            id="comment"
+                            name="comment"
+                            placeholder="Опишите, пожалуйста, основное, что вас беспокоит"
+                        />
+                    </InfoArticle>
 
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Хронические заболевания</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Есть ли у вас хронические заболевания?
-                                        <Description tag="chronicDiseasesTag" />
-                                    </span>
+                    <InfoArticle article="Хронические заболевания" className='control-g24'>
+                        <Description tag="chronicDiseasesTag" title='Есть ли у вас хронические заболевания?' />
+                        <YesNoSelector
+                            labelYes="Есть"
+                            labelNo="Нет"
+                            fieldName="chronicDiseases"
+                        />
+                        <SelectorWithComments
+                            options={diseas}
+                            placeholder="Выберите один или несколько"
+                            fieldName="diseaseList"
+                        />
+                    </InfoArticle>
 
-                                    <YesNoSelector
-                                        labelYes="Есть"
-                                        labelNo="Нет"
-                                        fieldName="chronicDiseases"
-                                    />
+                    <InfoArticle article="Приём медикаментов" className='control-g24'>
+                        <Description tag="medicationsTag" title='Принимали ли ранее медикаменты' />
+                        <YesNoSelector
+                            labelYes="Есть"
+                            labelNo="Нет"
+                            fieldName="medications"
+                        />
+                        <SelectorWithComments
+                            options={medications}
+                            placeholder="Выберите один или несколько"
+                            fieldName="medicationList"
+                        />
+                    </InfoArticle>
 
-                                    <SelectorWithComments
-                                        options={diseas}
-                                        placeholder="Выберите один или несколько"
-                                        fieldName="diseaseList"
-                                    />
+                    <InfoArticle article='Предыдущие операции' className='control-g24'>
+                        <Description tag="surgeriesTag" title='Были у вас ранее операции?' />
+                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="surgeries" />
+                        <TextAreaField id="surgeriesComment" name="surgeriesComment" placeholder="Напишите пожалуйста какие операции у вас были..." />
+                    </InfoArticle>
 
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                    <InfoArticle article='Аллергии и лекарственная непереносимость' className='control-g24'>
+                        <Description tag="alergyTag" title='У вас есть аллергия или лекарственная неперносимость?' />
+                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="alergy" />
+                        <SelectorWithComments
+                            options={alergy}
+                            placeholder="Выберите один или несколько"
+                            fieldName="alergyList"
+                        />
+                    </InfoArticle>
 
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Приём медикаментов</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Принимали ли ранее медикаменты
-                                        <Description tag="medicationsTag" />
-                                    </span>
+                    <InfoArticle article='Инфекционные заболевания' className='control-g24'>   
+                        <Description tag="infectionTag" title='Были ли или есть у вас инфекционные заболевания?' />
+                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="infection" />
+                        <SelectorWithComments
+                            options={infection}
+                            placeholder="Выберите один или несколько"
+                            fieldName="infectionList"
+                        />
+                    </InfoArticle>
 
-                                    <YesNoSelector
-                                        labelYes="Есть"
-                                        labelNo="Нет"
-                                        fieldName="medications"
-                                    />
-                                    <SelectorWithComments
-                                        options={medications}
-                                        placeholder="Выберите один или несколько"
-                                        fieldName="medicationList"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Предыдущие операции</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Были у вас ранее операции?
-                                        <Description tag="surgeriesTag" />
-                                        </span>
-                                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="surgeries" />
-                                        <TextAreaField id="surgeriesComment" name="surgeriesComment" placeholder="Напишите пожалуйста какие операции у вас были..." />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Аллергии и лекарственная непереносимость</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        У вас есть аллергия или лекарственная неперносимость?
-                                        <Description tag="alergyTag" />
-                                    </span>
+                    <InfoArticle article='Наследственные заболевания'>
+                        <Description tag="inheritanceDiseases" title='Есть ли у вас наследственные заболевания?' />
+                        <TextAreaField id="inheritanceDiseasesComment" name="inheritanceDiseasesComment" placeholder="Напишите пожалуйста есть ли у вас наследственные заболевания..." />
+                    </InfoArticle>
 
-                                    <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="alergy" />
+                    <InfoArticle article='Вредные привычки' className='control-g24'>
+                        <Description tag="badHabbitsTag" title='Есть ли у вас вредные привычки?' />
+                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="badHabbits" />
+                        <SelectorWithComments
+                            options={badHabbits}
+                            placeholder="Выберите один или несколько"
+                            fieldName="badHabbitsList"
+                        />
+                    </InfoArticle>
 
-                                    <SelectorWithComments
-                                        options={alergy}
-                                        placeholder="Выберите один или несколько"
-                                        fieldName="alergyList"
-                                    />
+                    <InfoArticle article='Беременность' className='control-g24'>
+                        <Description tag="pregnantTag" title=' Беременны в настоящий момент?' />
+                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="pregnant" />
+                    </InfoArticle>
 
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Инфекционные заболевания</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Были ли или есть у вас инфекционные заболевания?
-                                        <Description tag="infectionTag" />
-                                    </span>
-                                     <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="infection" />
+                    <InfoArticle article='Больничный лист' className='control-g24'>
+                        <Description tag="sickLeaveTag" title='Нужен ли больничный лист?' />
+                        <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="sickLeave" />
+                    </InfoArticle>
 
-                                     <SelectorWithComments
-                                        options={infection}
-                                        placeholder="Выберите один или несколько"
-                                        fieldName="infectionList"
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Наследственные заболевания</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control">
-                                    <label className="control_title control_title-notice" htmlFor="comment">
-                                            Есть ли у вас наследственные заболевания?
-                                            <Description tag="inheritanceDiseases" />
-                                    </label>
-                                    <TextAreaField id="inheritanceDiseasesComment" name="inheritanceDiseasesComment" placeholder="Напишите пожалуйста есть ли у вас наследственные заболевания..." />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Вредные привычки</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Есть ли у вас вредные привычки?
-                                        <Description tag="badHabbitsTag" />
-                                    </span>
-
-                                    <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="badHabbits" />
-                                    <SelectorWithComments
-                                        options={badHabbits}
-                                        placeholder="Выберите один или несколько"
-                                        fieldName="badHabbitsList"
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Беременность</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Беременны в настоящий момент?
-                                        <Description tag="pregnantTag" />
-                                    </span>
-
-                                    <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="pregnant" />
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    {/* <article className="article">
-                        <div className="article_head">
-                            <div className="title title-article">Больничный лист</div>
-                        </div>
-                        <div className="article_body">
-                            <div className="form_controls">
-                                <div className="control control-g24">
-                                    <span className="control_title control_title-notice">
-                                        Нужен ли больничный лист?
-                                        <Description tag="sickLeaveTag" />
-                                    </span>
-                                    <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="sickLeave" />
-                                </div>
-                            </div>
-                        </div>
-                    </article> */}
-                             <InfoArticle
-            title="Больничный лист"
-            descriptionTag="sickLeaveTag"
-            fieldName="sickLeave"
-          />
                 </div>
             </div>
-            <aside className="aside aside-right">
-                <div className="widget">
-                    <div className="widget_title">Информация</div>
-                    <div className="progress progress-dark" data-progress="about">
-                        <div className="progress_bar">
-                            <span
-                                className="progress_line"
-                                style={{ width: '50%' }}
-                            ></span>
-                        </div>
-                        <p className="progress_text">Заполнено <span className="progress_value">50%</span></p>
-                    </div>
-                    <div className="widget_actions">
-                        <button type="submit" className="btn btn-main btn-fw">Сохранить</button>
-                        <a href="info.html" className="btn btn-main btn-fw">Далее</a>
-                    </div>
-                </div>
-            </aside>
+
+            <AsideProgress 
+                title="Информация" 
+                progress="60" 
+                onClick={() => setActiveTab('docs')}
+            />
+            
         </form>
     )
 }

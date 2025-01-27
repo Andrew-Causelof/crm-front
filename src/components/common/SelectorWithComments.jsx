@@ -51,6 +51,7 @@ export default function SelectorWithComments({ options, placeholder, fieldName }
   };
 
   return (
+    <>
     <div className={`select ${isDropdownOpen ? 'show' : ''}`}>
       <button
         type="button"
@@ -84,45 +85,48 @@ export default function SelectorWithComments({ options, placeholder, fieldName }
         </div>
       )}
 
-      {/* Блоки с комментариями для выбранных элементов */}
+     
+
+    </div>
+     {/* Блоки с комментариями для выбранных элементов */}
       <div className="selected">
-        {selectedItems.map((item) => (
-          <div key={item.id} className="selected_item">
-            <div className="selected_item_head">
-              <span className="selected_item_title">{item.name}</span>
+      {selectedItems.map((item) => (
+        <div key={item.id} className="selected_item">
+          <div className="selected_item_head">
+            <span className="selected_item_title">{item.name}</span>
+            <button
+              type="button"
+              className="selected_item_del"
+              onClick={() => handleDelete(item.id)}
+            >
+              Удалить
+            </button>
+          </div>
+          <div className="selected_item_body">
+            {/* Если комментарий пустой, показываем кнопку для добавления */}
+            {!item.comment && !item.showCommentInput && (
               <button
                 type="button"
-                className="selected_item_del"
-                onClick={() => handleDelete(item.id)}
+                className="selected_item_add"
+                onClick={() => handleToggleCommentInput(item.id)}
               >
-                Удалить
+                Добавить комментарий к заболеванию
               </button>
-            </div>
-            <div className="selected_item_body">
-              {/* Если комментарий пустой, показываем кнопку для добавления */}
-              {!item.comment && !item.showCommentInput && (
-                <button
-                  type="button"
-                  className="selected_item_add"
-                  onClick={() => handleToggleCommentInput(item.id)}
-                >
-                  Добавить комментарий к заболеванию
-                </button>
-              )}
-              {/* Если showCommentInput true или есть комментарий, показываем поле для ввода */}
-              {item.showCommentInput || item.comment ? (
-                <textarea
-                  className="textarea textarea-sm"
-                  placeholder="Добавьте комментарий"
-                  value={item.comment || ''}
-                  onChange={(e) => handleCommentChange(e, item.id)}
-                />
-              ) : null}
-            </div>
+            )}
+            {/* Если showCommentInput true или есть комментарий, показываем поле для ввода */}
+            {item.showCommentInput || item.comment ? (
+              <textarea
+                className="textarea textarea-sm"
+                placeholder="Добавьте комментарий"
+                value={item.comment || ''}
+                onChange={(e) => handleCommentChange(e, item.id)}
+              />
+            ) : null}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+    </>
   );
 }
 

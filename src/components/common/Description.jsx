@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDescriptionStore } from '../../store';
 
-export default function Description({ tag }) {
+export default function Description({ tag, title ='' }) {
 
   const [description, setDescription] = useState(null);
   
@@ -16,11 +16,14 @@ export default function Description({ tag }) {
   if (!description) return null; // Если описание не найдено, ничего не рендерим
 
   return (
+    <span className="control_title control_title-notice">
+          {title}
     <div className="control_notice">
       <span className="control_notice_icon"></span>
       <div className="control_notice_content">
         <p>{description.content}</p>
       </div>
     </div>
+    </span>
   );
 }

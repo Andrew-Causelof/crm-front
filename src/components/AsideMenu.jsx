@@ -19,7 +19,7 @@ export default function AsideMenu() {
                     text="Медицинская информация"
                     progress={76}
                     active={activeTab === 'info'}
-                    onClick={() => setActiveTab('info')} zzz
+                    onClick={() => setActiveTab('info')}
                 />
                 <ProgressTab
                     text="Документы и анализы пациента"

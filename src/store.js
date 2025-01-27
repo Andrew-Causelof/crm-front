@@ -141,4 +141,37 @@ const useDescriptionStore = create((set) => ({
   },
 }));
 
-export { useTabStore, useUserStore, useGenderStore, useDescriptionStore };
+const useDocumentStore = create((set) => ({
+  documents: {},
+  addDocument: (fieldName, file) =>
+    set((state) => ({
+      documents: {
+        ...state.documents,
+        [fieldName]: [...(state.documents[fieldName] || []), file],
+      },
+    })),
+  removeDocument: (fieldName, fileName) =>
+    set((state) => ({
+      documents: {
+        ...state.documents,
+        [fieldName]: state.documents[fieldName].filter(
+          (file) => file.name !== fileName
+        ),
+      },
+    })),
+  clearDocuments: (fieldName) =>
+    set((state) => ({
+      documents: {
+        ...state.documents,
+        [fieldName]: [],
+      },
+    })),
+}));
+
+export {
+  useTabStore,
+  useUserStore,
+  useGenderStore,
+  useDescriptionStore,
+  useDocumentStore,
+};

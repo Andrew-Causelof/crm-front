@@ -1,19 +1,13 @@
 import React from 'react'
+import Breadcrumbs from '../common/Breadcrumbs';
+import AsideInfo from '../common/AsideInfo'
 
 export default function Rules() {
     return (
         <main className="main">
             <div className="content">
                 <div className="content_head">
-                    <div className="breadcrumbs">
-                        <a
-                            href="client.html"
-                            className="breadcrumbs_link"
-                        >Личный кабинет</a
-                        >
-                        <span className="breadcrumbs_sep">/</span>
-                        <span className="breadcrumbs_text">Правила при госпитализации</span>
-                    </div>
+                     <Breadcrumbs current='Правила при госпитализации' />
                     <div className="title title-page">Правила при госпитализации</div>
                 </div>
                 <div className="content_body">
@@ -252,22 +246,7 @@ export default function Rules() {
                     </article>
                 </div>
             </div>
-            <aside className="aside aside-right">
-                <div className="widget">
-                    <div className="widget_title">Информация</div>
-                    <div className="widget_actions widget_actions-col">
-                        <button className="btn btn-main btn-fw widget_print">
-                            Распечатать <span className="widget_print"></span>
-                        </button>
-                        <a
-                            download=""
-                            href="info.html"
-                            className="btn btn-main btn-fw"
-                        >Скачать в формате PDF</a
-                        >
-                    </div>
-                </div>
-            </aside>
+            <AsideInfo title='Информация'/>
         </main>
     )
 }

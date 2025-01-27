@@ -6,3 +6,7 @@
   border-color: #df3353;
   background: #fff3f6;
 }
+
+.next-btn {
+  cursor: pointer;
+}
