@@ -10,10 +10,7 @@ export default function ProgressTab({ text, progress, active, onClick }) {
                 <span className="menu_link_status"></span>
                 <div className="menu_link_content">
                     <div className="menu_link_text">{text}</div>
-                    <div
-                        className={`progress ${active ? 'progress-dark' : ''}`}
-                        data-progress="about"
-                    >
+                    <div className={`progress ${active ? 'progress-dark' : ''}`}>
                         <div className="progress_bar">
                             <span
                                 className="progress_line"

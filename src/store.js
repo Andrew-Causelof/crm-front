@@ -1,16 +1,15 @@
 import { create } from "zustand";
 import axios from "axios";
 
-import userData from "./data/userData.json"; // Импортируем данные
-import descriptions from "./data/descriptions.json"; // Импортируем описания
-
 const useTabStore = create((set) => ({
   activeTab: "about", // Текущий активный таб (по умолчанию 'about')
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 
 const useUserStore = create((set) => ({
-  userData: userData, // Используем данные из файла - Начальное состояние
+  userData: {}, // Начальное состояние
+  loading: false,
+  error: null,
 
   setUserData: (field, value) =>
     set((state) => ({
@@ -20,20 +19,25 @@ const useUserStore = create((set) => ({
       },
     })),
 
-  loadUserData: async () => {
-    // try {
-    //   const response = await fetch('/api/user'); // Замените на ваш API
-    //   const data = await response.json();
-    //   set({ userData: data });
-    // } catch (error) {
-    //   console.error('Ошибка загрузки данных:', error);
-    // }
+  // Метод загрузки данных пользователя из API
+  fetchUserData: async (userId) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await axios.get(
+        `https://spinelife.seo-gravity.ru/api/patient/${userId}`
+      );
+      set({ userData: response.data, loading: false });
+    } catch (error) {
+      console.error("Ошибка загрузки данных пользователя:", error);
+      set({ error: "Не удалось загрузить данные", loading: false });
+    }
   },
 
-  saveUserData: async () => {
+  saveUserData: async (userId) => {
     try {
       const { userData } = useUserStore.getState();
-      await fetch("/api/user", {
+      await fetch(`https://spinelife.seo-gravity.ru/api/patient/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -6,7 +6,7 @@ import { useDataLoader } from './useDataLoader.js';
 
 function App() {
     // Загружаем данные один раз при инициализации
-   // useDataLoader();
+   useDataLoader();
 
   return (
     <div className="page page-client">

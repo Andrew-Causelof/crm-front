@@ -30,7 +30,7 @@ function AsideProgress({
 
 AsideProgress.propTypes = {
     title: PropTypes.string.isRequired, // Название вкладки
-    progress: PropTypes.string.isRequired, // Прогресс в процентах
+    progress: PropTypes.number.isRequired, // Прогресс в процентах
     onClick: PropTypes.func, // Обработчик клика
 };
 

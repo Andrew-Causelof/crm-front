@@ -1,24 +1,14 @@
-// useDataLoader.js
 //@TODO нужн обудет реализовать загрузку данных при инициализации
 import { useEffect } from "react";
-import { useDescriptionStore } from "./store";
+import { useUserStore } from "./store";
 
-const fetchDescriptions = async () => {
-  // Здесь предполагаем, что API возвращает данные в нужном формате
-  const response = await fetch("/api/descriptions");
-  const data = await response.json();
-  return data;
-};
-
-export const useDataLoader = () => {
-  const setDescriptions = useDescriptionStore((state) => state.setDescriptions);
+function useDataLoader() {
+  const fetchUserData = useUserStore((state) => state.fetchUserData);
 
   useEffect(() => {
-    const loadData = async () => {
-      const descriptions = await fetchDescriptions();
-      setDescriptions(descriptions); // Загружаем данные в состояние
-    };
+    const userId = 3; //@TODO ID пользователя (нужно динамически определять)
+    fetchUserData(userId);
+  }, [fetchUserData]); // Запуск загрузки при монтировании
+}
 
-    loadData();
-  }, [setDescriptions]);
-};
+export { useDataLoader };

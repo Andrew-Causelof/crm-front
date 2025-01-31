@@ -13,10 +13,10 @@ import { useTabStore } from '../../store';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 export default function About() {
-    const { userData, setUserData, loadUserData, saveUserData } = useUserStore();
-    useEffect(() => {
-        loadUserData(); // Загружаем данные при загрузке страницы
-    }, [loadUserData]);
+    const { userData, setUserData, saveUserData } = useUserStore();
+    // useEffect(() => {
+    //     loadUserData(); // Загружаем данные при загрузке страницы
+    // }, [loadUserData]);
 
     const handleInputChange = (field) => (e) => {
         console.log(e);

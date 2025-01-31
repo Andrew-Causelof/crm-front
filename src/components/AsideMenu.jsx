@@ -4,27 +4,27 @@ import ProgressTab from './AsideMenu/ProgressTab';
 import { useTabStore, useUserStore } from '../store';
 
 export default function AsideMenu() {
-    const { activeTab, setActiveTab } = useTabStore(); // Получаем состояние и функцию изменения
+    //const { activeTab, setActiveTab } = useTabStore(); // Получаем состояние и функцию изменения
     const { userData, setUserData } = useUserStore();
-
+    console.log(userData);
     return (
         <aside id="menu" className="aside aside-left gradient">
             <ul className="menu">
                 <ProgressTab
                     text="Информация о пациенте"
-                    progress={50}
+                    progress={userData.progress?.general || 0}
                     active={userData.activeTab === 'about'}
                     onClick={() => setUserData('activeTab','about')}
                 />
                 <ProgressTab
                     text="Медицинская информация"
-                    progress={76}
+                    progress={userData.progress?.medical || 0}
                     active={userData.activeTab === 'info'}
                     onClick={() => setUserData('activeTab','info')}
                 />
                 <ProgressTab
                     text="Документы и анализы пациента"
-                    progress={20}
+                    progress={userData.progress?.documents || 0}
                     active={userData.activeTab === 'docs'}
                     onClick={() => setUserData('activeTab','docs')}
                     
