@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import InputField from '../common/InputField';
 import PropTypes from 'prop-types';
-import { useGenderStore } from '../../store';
 import { useUserStore } from '../../store';
 
 export default function GenderSelector() {

@@ -1,10 +1,11 @@
 import React from 'react';
 import Tab from './AsideMenu/Tab';
 import ProgressTab from './AsideMenu/ProgressTab';
-import { useTabStore } from '../store';
+import { useTabStore, useUserStore } from '../store';
 
 export default function AsideMenu() {
     const { activeTab, setActiveTab } = useTabStore(); // Получаем состояние и функцию изменения
+    const { userData, setUserData } = useUserStore();
 
     return (
         <aside id="menu" className="aside aside-left gradient">
@@ -12,40 +13,41 @@ export default function AsideMenu() {
                 <ProgressTab
                     text="Информация о пациенте"
                     progress={50}
-                    active={activeTab === 'about'}
-                    onClick={() => setActiveTab('about')}
+                    active={userData.activeTab === 'about'}
+                    onClick={() => setUserData('activeTab','about')}
                 />
                 <ProgressTab
                     text="Медицинская информация"
                     progress={76}
-                    active={activeTab === 'info'}
-                    onClick={() => setActiveTab('info')}
+                    active={userData.activeTab === 'info'}
+                    onClick={() => setUserData('activeTab','info')}
                 />
                 <ProgressTab
                     text="Документы и анализы пациента"
                     progress={20}
-                    active={activeTab === 'docs'}
-                    onClick={() => setActiveTab('docs')}
+                    active={userData.activeTab === 'docs'}
+                    onClick={() => setUserData('activeTab','docs')}
+                    
                 />
                 <Tab
                     text="Правила при госпитализации"
-                    active={activeTab === 'rules'}
-                    onClick={() => setActiveTab('rules')}
+                    active={userData.activeTab === 'rules'}
+                    onClick={() => setUserData('activeTab','rules')}
                 />
                 <Tab
                     text="Рекомендации после операции"
-                    active={activeTab === 'recomendation'}
-                    onClick={() => setActiveTab('recomendation')}
+                    active={userData.activeTab === 'recomendation'}
+                    onClick={() => setUserData('activeTab','recomendation')}
                 />
                 <Tab
                     text="Чат с клиникой"
-                    active={activeTab === 'chat'}
-                    onClick={() => setActiveTab('chat')}
+                    active={userData.activeTab === 'chat'}
+                    onClick={() => setUserData('activeTab','chat')}
                 />
                 <Tab
                     text="Контакты"
-                    active={activeTab === 'contacts'}
-                    onClick={() => setActiveTab('contacts')}
+                    active={userData.activeTab === 'contacts'}
+                    onClick={() => setUserData('activeTab','contacts')}
                 />
             </ul>
         </aside>

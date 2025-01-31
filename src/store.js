@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import axios from "axios";
 
 import userData from "./data/userData.json"; // Импортируем данные
 import descriptions from "./data/descriptions.json"; // Импортируем описания
@@ -6,12 +7,6 @@ import descriptions from "./data/descriptions.json"; // Импортируем �
 const useTabStore = create((set) => ({
   activeTab: "about", // Текущий активный таб (по умолчанию 'about')
   setActiveTab: (tab) => set({ activeTab: tab }),
-}));
-
-const useGenderStore = create((set) => ({
-  selectedGender: "", // Начальное значение
-  setGender: (gender) => set({ selectedGender: gender }), // Установить выбранный пол
-  initializeGender: (gender) => set({ selectedGender: gender || "" }), // Инициализация пола
 }));
 
 const useUserStore = create((set) => ({
@@ -168,10 +163,4 @@ const useDocumentStore = create((set) => ({
     })),
 }));
 
-export {
-  useTabStore,
-  useUserStore,
-  useGenderStore,
-  useDescriptionStore,
-  useDocumentStore,
-};
+export { useTabStore, useUserStore, useDescriptionStore, useDocumentStore };

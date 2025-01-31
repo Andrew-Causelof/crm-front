@@ -35,7 +35,6 @@ export default function Info() {
                 </div>
                 <div className="content_body">
 
-
                     <InfoArticle article="Жалобы">
                         <Description tag="commentTag" title="Жалобы на здоровье" />
                         <TextAreaField
@@ -129,10 +128,10 @@ export default function Info() {
 
             <AsideProgress 
                 title="Информация" 
-                progress="60" 
-                onClick={() => setActiveTab('docs')}
+                progress={userData.progress.medical}
+                onClick={() => setUserData('activeTab','docs')}
             />
-            
+
         </form>
     )
 }

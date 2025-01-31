@@ -1,4 +1,5 @@
 {
+    "activeTab": "about",
     "gender": "male",
     "firstname": "Егор",
     "lastname": "Летов",
@@ -44,6 +45,11 @@
     "inheritanceDiseasesComment": "",
     "badHabbits": "no",
     "pregnant": "no",
-    "sickLeave": "no"
+    "sickLeave": "no",
+    "progress": {
+      "general" : 50,
+      "medical" : 76,
+      "documents" : 20
+    }
   }
   

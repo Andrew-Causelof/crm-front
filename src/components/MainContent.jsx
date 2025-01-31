@@ -5,19 +5,19 @@ import Docs from "./MainContent/Docs";
 import Info from "./MainContent/Info";
 import Recomendation from "./MainContent/Recomendation";
 import Rules from "./MainContent/Rules";
-import { useTabStore } from "../store";
+import { useUserStore } from "../store";
 
 export default function MainContent() {
-    const { activeTab } = useTabStore(); // Получаем текущий активный таб
+    const { userData } = useUserStore();
 
     return (
         <>
-            {activeTab === 'about' && <About />}
-            {activeTab === 'info' && <Info />}
-            {activeTab === 'docs' && <Docs />}
-            {activeTab === 'rules' && <Rules />}
-            {activeTab === 'recomendation' && <Recomendation />}
-            {activeTab === 'chat' && <Chat />}
+            {userData.activeTab === 'about' && <About />}
+            {userData.activeTab === 'info' && <Info />}
+            {userData.activeTab === 'docs' && <Docs />}
+            {userData.activeTab === 'rules' && <Rules />}
+            {userData.activeTab === 'recomendation' && <Recomendation />}
+            {userData.activeTab === 'chat' && <Chat />}
         </>
     );
 }

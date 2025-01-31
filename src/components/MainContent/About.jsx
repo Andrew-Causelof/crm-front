@@ -303,10 +303,9 @@ export default function About() {
             </div>
             <AsideProgress 
                 title="Информация" 
-                progress="60" 
-                onClick={() => setActiveTab('info')}
+                progress={userData.progress.general}
+                onClick={() => setUserData('activeTab','info')}
             />
-            
         </form>
     )
 }
