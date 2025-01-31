@@ -35,18 +35,22 @@ const useUserStore = create((set) => ({
   },
 
   saveUserData: async (userId) => {
+    set({ loading: true, error: null });
+
     try {
       const { userData } = useUserStore.getState();
-      await fetch(`https://spinelife.seo-gravity.ru/api/patient/${userId}`, {
+      fetch(`https://spinelife.seo-gravity.ru/api/patient/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
-      });
-      console.log("Данные сохранены успешно");
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("Success:", data))
+        .catch((error) => console.error("Ошибка:", error));
     } catch (error) {
-      console.error("Ошибка сохранения данных:", error);
+      console.error("Ошибка сохранения данных пользователя:", error);
     }
   },
 }));

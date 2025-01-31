@@ -1,12 +1,29 @@
 import React from "react";
 import PropTypes from 'prop-types';
-
+import { useUserStore } from '../../store';
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 
 function AsideProgress({
     title,
     progress,
     onClick
 }) {
+
+    const { saveUserData } = useUserStore();
+
+    const notyf  = new Notyf();
+
+    const handleSave = async () => {
+        try {
+            await saveUserData(3);
+            notyf.success('Данные обновлены успешно');
+
+        } catch (error) {
+            console.error("Ошибка сохранения данных:", error);
+            notyf.error('Ошибка сохранения данных');
+        }
+    }
 
   return (
     <aside className="aside aside-right">
@@ -20,7 +37,9 @@ function AsideProgress({
             </div>
             <div className="widget_actions">
                 {/* @TODO: Реализовать сохранение */}
-                <button type="submit" className="btn btn-main btn-fw"> Сохранить</button>
+                <button type="button" className="btn btn-main btn-fw" onClick={handleSave}>
+                    Сохранить
+                </button>
                 <a className="btn btn-main btn-fw next-btn" onClick={onClick}>Далее</a>
             </div>
         </div>
