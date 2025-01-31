@@ -4,7 +4,7 @@ import userData from "./data/userData.json"; // Импортируем данн�
 import descriptions from "./data/descriptions.json"; // Импортируем описания
 
 const useTabStore = create((set) => ({
-  activeTab: "info", // Текущий активный таб (по умолчанию 'about')
+  activeTab: "about", // Текущий активный таб (по умолчанию 'about')
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 
