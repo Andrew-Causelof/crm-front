@@ -39,16 +39,15 @@ const useUserStore = create((set) => ({
 
     try {
       const { userData } = useUserStore.getState();
-      fetch(`https://spinelife.seo-gravity.ru/api/patient/${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("Success:", data))
-        .catch((error) => console.error("Ошибка:", error));
+      console.log(" userData", userData);
+      await axios.put(
+        `https://spinelife.seo-gravity.ru/api/patient/${userId}`,
+        userData,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // Если сервер требует авторизацию
+        }
+      );
     } catch (error) {
       console.error("Ошибка сохранения данных пользователя:", error);
     }

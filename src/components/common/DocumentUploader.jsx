@@ -5,7 +5,11 @@ import { useDocumentStore } from '../../store';
 const MAX_FILE_SIZE_MB = 10; // Максимальный размер файла в МБ
 const ALLOWED_FORMATS = ['jpeg', 'png', 'pdf', 'doc', 'docx']; // Допустимые форматы
 
-export default function DocumentUploader({ fieldName, title, notice }) {
+export default function DocumentUploader({ 
+  fieldName, 
+  title, 
+  notice = "",
+}) {
   const { documents, addDocument, removeDocument } = useDocumentStore();
   const [error, setError] = useState('');
 
@@ -103,8 +107,4 @@ DocumentUploader.propTypes = {
   fieldName: PropTypes.string.isRequired, // Уникальное имя для идентификации состояния документов
   title: PropTypes.string.isRequired, // Заголовок для блока
   notice: PropTypes.string, // Описание или подсказка
-};
-
-DocumentUploader.defaultProps = {
-  notice: '', // Подсказка по умолчанию
 };
