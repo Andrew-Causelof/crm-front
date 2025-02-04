@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { API_BASE_URL } from "./config";
 import axios from "axios";
 
 const useTabStore = create((set) => ({
@@ -11,23 +12,31 @@ const useUserStore = create((set) => ({
   loading: false,
   error: null,
 
-  setUserData: (field, value) =>
-    set((state) => ({
-      userData: {
-        ...state.userData,
-        [field]: value, // Обновляем только одно поле
-      },
-    })),
+  setUserData: (field, value) => {
+    set((state) => {
+      const updatedUserData = { ...state.userData, [field]: value };
+      const updatedProgress = calculateProgress(updatedUserData);
 
-  // Метод загрузки данных пользователя из API
+      return {
+        userData: {
+          ...updatedUserData,
+          progress: updatedProgress,
+        },
+      };
+    });
+  },
+
   fetchUserData: async (userId) => {
     set({ loading: true, error: null });
 
     try {
       const response = await axios.get(
-        `https://spinelife.seo-gravity.ru/api/patient/${userId}`
+        `${API_BASE_URL}/patient/${userId}`
       );
-      set({ userData: response.data, loading: false });
+      const userData = response.data;
+      const progress = calculateProgress(userData);
+
+      set({ userData: { ...userData, progress }, loading: false });
     } catch (error) {
       console.error("Ошибка загрузки данных пользователя:", error);
       set({ error: "Не удалось загрузить данные", loading: false });
@@ -41,11 +50,13 @@ const useUserStore = create((set) => ({
       const { userData } = useUserStore.getState();
       console.log(" userData", userData);
       await axios.put(
-        `https://spinelife.seo-gravity.ru/api/patient/${userId}`,
+        `${API_BASE_URL}/patient/${userId}`,
         userData,
         {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true, // Если сервер требует авторизацию
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // Это будет работать только если сервер отправляет Access-Control-Allow-Credentials
         }
       );
     } catch (error) {
@@ -169,5 +180,38 @@ const useDocumentStore = create((set) => ({
       },
     })),
 }));
+
+// Функция для расчета заполненности полей
+const calculateProgress = (userData) => {
+  const sections = {
+    general: ["gender", "lastname", "firstname", "thirdname", "birthday", "height",  "weight", "phone", "phone2", "email", "polis", "polisRegion", "snils", "passport", "passportDate", "passportFrom", "city", "address"],
+    medical: ["comment", "chronicDiseases", "diseaseList", "medications", "medicationList", "surgeries", "surgeriesComment", "alergy", "alergyList", "infection", "infectionList", "inheritanceDiseasesComment", "badHabbits", "badHabbitsList",  "pregnant", "sickLeave" ],
+    documents: ["passport", "insurance", "registration"],
+  };
+
+  let progress = {};
+
+  Object.keys(sections).forEach((section) => {
+    const fields = sections[section];
+    const filledFields = fields.filter((field) => {
+      const value = userData[field];
+
+      if (Array.isArray(value)) {
+        return value.length > 0; // Проверяем, что массив не пустой
+      }
+
+      if (typeof value === "string") {
+        return value.trim() !== ""; // Проверяем, что строка не пустая
+      }
+
+      return value !== undefined && value !== null; // На случай других типов данных
+    });
+
+    progress[section] = Math.round((filledFields.length / fields.length) * 100);
+  });
+
+  return progress;
+};
+
 
 export { useTabStore, useUserStore, useDescriptionStore, useDocumentStore };

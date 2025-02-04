@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export default function PhoneInputField({
@@ -65,7 +65,7 @@ export default function PhoneInputField({
 }
 
 PhoneInputField.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
     placeholder: PropTypes.string,

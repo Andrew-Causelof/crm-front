@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDescriptionStore } from '../../store';
+import PropTypes from 'prop-types';
 
-export default function Description({ tag, title ='' }) {
+export default function Description({ tag, title = '' }) {
 
   const [description, setDescription] = useState(null);
-  
+
   const descriptions = useDescriptionStore((state) => state.descriptions); // Получаем все описания
 
   useEffect(() => {
@@ -17,13 +18,19 @@ export default function Description({ tag, title ='' }) {
 
   return (
     <span className="control_title control_title-notice">
-          {title}
-    <div className="control_notice">
-      <span className="control_notice_icon"></span>
-      <div className="control_notice_content">
-        <p>{description.content}</p>
+      {title}
+      <div className="control_notice">
+        <span className="control_notice_icon"></span>
+        <div className="control_notice_content">
+          <p>{description.content}</p>
+        </div>
       </div>
-    </div>
     </span>
   );
 }
+
+
+Description.propTypes = {
+  tag: PropTypes.string.isRequired,
+  title: PropTypes.string,
+};

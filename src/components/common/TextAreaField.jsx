@@ -1,5 +1,3 @@
-// TextAreaField.jsx
-import React from 'react';
 import { useUserStore } from '../../store'; // Импортируем Zustand хранилище
 import PropTypes from 'prop-types';
 
@@ -27,7 +25,7 @@ export default function TextAreaField({ id, name, placeholder }) {
 }
 
 TextAreaField.propTypes = {
-  id: PropTypes.string.isRequired, // Уникальный ID для поля
+  id: PropTypes.string, // Уникальный ID для поля
   name: PropTypes.string.isRequired, // Имя поля для доступа к состоянию
   placeholder: PropTypes.string, // Плейсхолдер
 };

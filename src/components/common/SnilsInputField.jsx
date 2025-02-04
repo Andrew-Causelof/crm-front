@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export default function SnilsInputField({
@@ -76,7 +76,7 @@ export default function SnilsInputField({
 }
 
 SnilsInputField.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.string, // Значение СНИЛС
     placeholder: PropTypes.string, // Плейсхолдер

@@ -1,30 +1,20 @@
-import React from 'react'
-
 import { useUserStore } from "../../store";
-
 import YesNoSelector from "../common/YesNoSelector";
-import MultipleSelector from "../common/MultipleSelector";
 import Description from "../common/Description";
 import TextAreaField from "../common/TextAreaField";
 import SelectorWithComments from "../common/SelectorWithComments";
 import InfoArticle from "../common/InfoArticle";
-
-import ErrorBoundary from "../../tools/ErrorBoundary";
-
 import diseas from "../../data/diseaseList.json";
 import medications from "../../data/medicationList.json";
 import alergy from "../../data/alergyList.json";
 import infection from "../../data/infectionList.json";
 import badHabbits from "../../data/badHabbitsList.json";
-import { useTabStore } from '../../store';
 import AsideProgress from '../common/AsideProgress';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 export default function Info() {
 
-    const { userData, setUserData, loadUserData, saveUserData } = useUserStore();
-    const { activeTab, setActiveTab } = useTabStore();
-    console.log(userData);
+    const { userData, setUserData } = useUserStore();
 
     return (
         <form className="main">
@@ -38,7 +28,6 @@ export default function Info() {
                     <InfoArticle article="Жалобы">
                         <Description tag="commentTag" title="Жалобы на здоровье" />
                         <TextAreaField
-                            id="comment"
                             name="comment"
                             placeholder="Опишите, пожалуйста, основное, что вас беспокоит"
                         />
@@ -88,7 +77,7 @@ export default function Info() {
                         />
                     </InfoArticle>
 
-                    <InfoArticle article='Инфекционные заболевания' className='control-g24'>   
+                    <InfoArticle article='Инфекционные заболевания' className='control-g24'>
                         <Description tag="infectionTag" title='Были ли или есть у вас инфекционные заболевания?' />
                         <YesNoSelector labelYes="Да" labelNo="Нет" fieldName="infection" />
                         <SelectorWithComments
@@ -126,10 +115,10 @@ export default function Info() {
                 </div>
             </div>
 
-            <AsideProgress 
-                title="Информация" 
+            <AsideProgress
+                title="Информация"
                 progress={userData.progress.medical}
-                onClick={() => setUserData('activeTab','docs')}
+                onClick={() => setUserData('activeTab', 'docs')}
             />
 
         </form>

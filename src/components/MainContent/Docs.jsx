@@ -1,4 +1,3 @@
-import React from 'react'
 import DocumentUploader from '../common/DocumentUploader';
 import DocsArticle from '../common/DocsArticle';
 import Breadcrumbs from '../common/Breadcrumbs';
@@ -9,11 +8,11 @@ export default function Docs() {
 
     const handlePrint = () => {
         console.log('Печать документа...');
-      };
-    
-      const handleDownload = () => {
+    };
+
+    const handleDownload = () => {
         console.log('Скачивание PDF...');
-      };
+    };
 
     return (
         <form className="main">
@@ -61,7 +60,7 @@ export default function Docs() {
                                 notice="Далеко-далеко за словесными горами в стране гласных, и согласных живут рыбные тексты."
                             />
 
-                            
+
                             <DocumentUploaderWithActions
                                 fieldName="coagulogram_files"
                                 title="Коагулограмма"
@@ -140,7 +139,7 @@ export default function Docs() {
                 </div>
             </div>
 
-            <AsideInfo title='Информация'/>
+            <AsideInfo title='Информация' />
         </form>
     )
 }

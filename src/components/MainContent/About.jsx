@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import InputField from "../common/InputField";
 import PhoneInputField from "../common/PhoneInputField";
 import AirDatepickerField from "../common/AirDatepickerField";
@@ -9,38 +8,19 @@ import { useUserStore } from "../../store";
 import regions from "../../data/regions.json";
 import Description from "../common/Description";
 import AsideProgress from '../common/AsideProgress';
-import { useTabStore } from '../../store';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 export default function About() {
-    const { userData, setUserData, saveUserData } = useUserStore();
-    // useEffect(() => {
-    //     loadUserData(); // Загружаем данные при загрузке страницы
-    // }, [loadUserData]);
+    const { userData, setUserData } = useUserStore();
 
     const handleInputChange = (field) => (e) => {
-        console.log(e);
         setUserData(field, e.target.value); // Обновляем состояние поля
     };
     const handleDataInputChange = (field) => (e) => {
         setUserData(field, e); // Обновляем состояние поля даты
     };
 
-    const handleSave = () => {
-        saveUserData(); // Сохраняем данные в API
-    };
-
     const regionOptions = regions.map(item => item.name);
-
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
-
-    const handleSelectionChange = (newSelection) => {
-      setSelectedOptions(newSelection);
-      console.log(newSelection);
-    };
-
-    const { activeTab, setActiveTab } = useTabStore();
 
 
     return (
@@ -60,23 +40,21 @@ export default function About() {
                             <GenderSelector />
 
                             <div className="form_controls form_controls-grid">
+
                                 <div className="control">
-                                    <label className="control_title" htmlFor="lastname">Фамилия</label
-                                    >
+                                    <label className="control_title">Фамилия</label>
                                     <InputField
-                                        className=""
-                                        id="lastname"
                                         type="text"
-                                        name="lastname"
-                                        value={userData.lastname || ''}
+                                        name="lastName"
+                                        value={userData.lastName || ''}
                                         placeholder="Ваша фамилия..."
                                         onChange={handleInputChange('lastName')}
                                     />
                                 </div>
+
                                 <div className="control">
-                                    <label className="control_title" htmlFor="firstname">Имя</label>
+                                    <label className="control_title">Имя</label>
                                     <InputField
-                                        id="firstname"
                                         type="text"
                                         name="firstname"
                                         value={userData.firstname || ''}
@@ -85,9 +63,8 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="control">
-                                    <label className="control_title" htmlFor="thirdname">Отчество</label>
+                                    <label className="control_title">Отчество</label>
                                     <InputField
-                                        id="thirdname"
                                         value={userData.thirdname || ''}
                                         type="text"
                                         name="thirdname"
@@ -109,9 +86,8 @@ export default function About() {
                                     />
                                 </label>
                                 <div className="control">
-                                    <label className="control_title" htmlFor="height">Рост, см</label>
+                                    <label className="control_title">Рост, см</label>
                                     <InputField
-                                        id="length"
                                         type="text"
                                         name="height"
                                         value={userData.height || ''}
@@ -120,9 +96,8 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="control">
-                                    <label className="control_title" htmlFor="weight">Вес, кг</label>
+                                    <label className="control_title">Вес, кг</label>
                                     <InputField
-                                        id="weight"
                                         type="text"
                                         name="weight"
                                         value={userData.weight || ''}
@@ -140,9 +115,8 @@ export default function About() {
                         <div className="article_body">
                             <div className="form_controls form_controls-grid">
                                 <div className="control">
-                                    <label className="control_title" htmlFor="phone">Телефон</label>
+                                    <label className="control_title">Телефон</label>
                                     <PhoneInputField
-                                        id="phone"
                                         name="phone"
                                         value={userData.phone || ''}
                                         onChange={handleInputChange('phone')}
@@ -150,10 +124,8 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="control">
-                                    <label className="control_title" htmlFor="phone2">Доп. телефон (при наличии)</label>
-
+                                    <label className="control_title">Доп. телефон (при наличии)</label>
                                     <PhoneInputField
-                                        id="phone"
                                         name="phone2"
                                         value={userData.phone2 || ''}
                                         onChange={handleInputChange('phone2')}
@@ -161,9 +133,8 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="control">
-                                    <label className="control_title" htmlFor="email">Электронная почта</label>
+                                    <label className="control_title">Электронная почта</label>
                                     <InputField
-                                        id="email"
                                         type="text"
                                         name="email"
                                         value={userData.email || ''}
@@ -183,15 +154,11 @@ export default function About() {
                             <div className="form_controls form_controls-grid">
                                 <div className="control">
                                     <label
-                                        className="control_title control_title-notice"
-                                        htmlFor="polis"
-                                    >Номер страхового полиса
-
+                                        className="control_title control_title-notice">
+                                        Номер страхового полиса
                                         <Description tag="polisTag" />
-                                        
-                                        </label>
+                                    </label>
                                     <InputField
-                                        id="polis"
                                         type="text"
                                         name="polis"
                                         value={userData.polis || ''}
@@ -201,10 +168,9 @@ export default function About() {
                                 </div>
                                 <div className="control">
                                     <label
-                                        className="control_title control_title-notice"
-                                        htmlFor="polis-reg">Регион полиса
+                                        className="control_title control_title-notice">
+                                        Регион полиса
                                         <Description tag="polisRegionTag" />
-                                        
                                     </label>
                                     <SingleSelector
                                         options={regionOptions}
@@ -215,13 +181,11 @@ export default function About() {
                                 </div>
                                 <div className="control">
                                     <label
-                                        className="control_title control_title-notice"
-                                        htmlFor="snils"
-                                    >СНИЛС
+                                        className="control_title control_title-notice">
+                                        СНИЛС
                                         <Description tag="snilsTag" />
                                     </label>
                                     <SnilsInputField
-                                        id="snils"
                                         name="snils"
                                         value={userData.snils || ''}
                                         onChange={handleInputChange('snils')}
@@ -230,13 +194,11 @@ export default function About() {
                                 </div>
                                 <div className="control">
                                     <label
-                                        className="control_title control_title-notice"
-                                        htmlFor="passport"
-                                    >Серия и номер паспорта
-                                    <Description tag="passportTag" />
+                                        className="control_title control_title-notice">
+                                        Серия и номер паспорта
+                                        <Description tag="passportTag" />
                                     </label>
                                     <InputField
-                                        id="passport"
                                         type="text"
                                         name="passport"
                                         value={userData.passport || ''}
@@ -256,11 +218,11 @@ export default function About() {
                                     />
                                 </label>
                                 <div className="control">
-                                    <label className="control_title control_title-notice" htmlFor="passport-from">Кем выдан
+                                    <label className="control_title control_title-notice">
+                                        Кем выдан
                                         <Description tag="passportFromTag" />
                                     </label>
                                     <InputField
-                                        id="passport-from"
                                         type="text"
                                         name="passport-from"
                                         placeholder="Введите кем выдано..."
@@ -269,12 +231,11 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="control">
-                                    <label className="control_title control_title-notice" htmlFor="city">
+                                    <label className="control_title control_title-notice">
                                         Город регистрации
                                         <Description tag="cityTag" />
                                     </label>
                                     <InputField
-                                        id="city"
                                         type="text"
                                         name="city"
                                         placeholder="Город..."
@@ -283,12 +244,11 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="control control-x2">
-                                    <label className="control_title control_title-notice" htmlFor="address">
+                                    <label className="control_title control_title-notice">
                                         Адрес регистрации
                                         <Description tag="addressTag" />
                                     </label>
                                     <InputField
-                                        id="address"
                                         type="text"
                                         name="address"
                                         placeholder="Адрес..."
@@ -301,10 +261,10 @@ export default function About() {
                     </article>
                 </div>
             </div>
-            <AsideProgress 
-                title="Информация" 
+            <AsideProgress
+                title="Информация"
                 progress={userData.progress.general}
-                onClick={() => setUserData('activeTab','info')}
+                onClick={() => setUserData('activeTab', 'info')}
             />
         </form>
     )

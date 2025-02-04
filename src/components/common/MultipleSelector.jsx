@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function MultipleSelector({ options, onChange, placeholder, value }) {
@@ -66,4 +66,5 @@ MultipleSelector.propTypes = {
   options: PropTypes.array.isRequired, // Список доступных опций
   onChange: PropTypes.func.isRequired, // Функция, которая будет вызываться при изменении выбора
   placeholder: PropTypes.string, // Плейсхолдер для пустого состояния
+  value: PropTypes.array, // Список выбранных опций
 };

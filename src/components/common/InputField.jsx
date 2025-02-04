@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 
@@ -23,16 +23,6 @@ export default function InputField({
         return fieldValue && fieldValue.trim() !== '';
     }
 
-    const handleChange = (e) => {
-        const currentValue = e.target.value;
-
-        if (onChange) {
-            onChange(e, currentValue);
-        }
-
-        setValidationClass(validateField(currentValue) ? 'ok' : 'err');
-    }
-
     useEffect(() => {
         setValidationClass(validateField(value) ? 'ok' : 'err');
     }, [value]);
@@ -55,7 +45,7 @@ export default function InputField({
 }
 
 InputField.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
     defaultValue: PropTypes.string,

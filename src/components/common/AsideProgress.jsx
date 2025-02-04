@@ -1,8 +1,6 @@
-import React from "react";
 import PropTypes from 'prop-types';
 import { useUserStore } from '../../store';
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css';
+import { useNotification } from '../../context/NotificationContext';
 
 function AsideProgress({
     title,
@@ -12,7 +10,7 @@ function AsideProgress({
 
     const { saveUserData } = useUserStore();
 
-    const notyf  = new Notyf();
+    const notyf = useNotification(); // Используем общий экземпляр
 
     const handleSave = async () => {
         try {
@@ -25,26 +23,26 @@ function AsideProgress({
         }
     }
 
-  return (
-    <aside className="aside aside-right">
-        <div className="widget">
-            <div className="widget_title">{title}</div>
-            <div className="progress progress-dark">
-                <div className="progress_bar">
-                    <span className="progress_line" style={{ width: `${progress}%` }}></span>
+    return (
+        <aside className="aside aside-right">
+            <div className="widget">
+                <div className="widget_title">{title}</div>
+                <div className="progress progress-dark">
+                    <div className="progress_bar">
+                        <span className="progress_line" style={{ width: `${progress}%` }}></span>
+                    </div>
+                    <p className="progress_text">Заполнено <span className="progress_value">{progress}%</span></p>
                 </div>
-                <p className="progress_text">Заполнено <span className="progress_value">{progress}%</span></p>
+                <div className="widget_actions">
+                    {/* @TODO: Реализовать сохранение */}
+                    <button type="button" className="btn btn-main btn-fw" onClick={handleSave}>
+                        Сохранить
+                    </button>
+                    <a className="btn btn-main btn-fw next-btn" onClick={onClick}>Далее</a>
+                </div>
             </div>
-            <div className="widget_actions">
-                {/* @TODO: Реализовать сохранение */}
-                <button type="button" className="btn btn-main btn-fw" onClick={handleSave}>
-                    Сохранить
-                </button>
-                <a className="btn btn-main btn-fw next-btn" onClick={onClick}>Далее</a>
-            </div>
-        </div>
-    </aside>
-  )
+        </aside>
+    )
 }
 
 AsideProgress.propTypes = {

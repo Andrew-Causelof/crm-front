@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const YANDEX_GEOCODER_API_KEY = 'fa617298-1ac0-4a37-987a-b0e8ce460241'; // @TODO Заменить на свой API ключ

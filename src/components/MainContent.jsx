@@ -10,6 +10,8 @@ import { useUserStore } from "../store";
 export default function MainContent() {
     const { userData } = useUserStore();
 
+    console.log(userData)
+
     return (
         <>
             {userData.activeTab === 'about' && <About />}

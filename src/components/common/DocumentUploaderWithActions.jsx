@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDocumentStore } from '../../store';
 
@@ -6,11 +6,11 @@ const MAX_FILE_SIZE_MB = 10; // Максимальный размер файла
 const ALLOWED_FORMATS = ['jpeg', 'png', 'pdf', 'doc', 'docx']; // Допустимые форматы
 
 
-export default function DocumentUploaderWithActions({ 
-  fieldName, 
-  title, 
-  notice = '', 
-  items = [], 
+export default function DocumentUploaderWithActions({
+  fieldName,
+  title,
+  notice = '',
+  items = [],
   actions = {}
 }) {
   const { documents, addDocument, removeDocument } = useDocumentStore();
@@ -129,8 +129,8 @@ DocumentUploaderWithActions.propTypes = {
   notice: PropTypes.string, // Описание или подсказка
   items: PropTypes.array, // Список элементов для отображения
   actions: PropTypes.shape({
-  print: PropTypes.func, // Функция для печати
-  download: PropTypes.func, // Функция для скачивания PDF
+    print: PropTypes.func, // Функция для печати
+    download: PropTypes.func, // Функция для скачивания PDF
   }), // Дополнительные действия
 };
 
