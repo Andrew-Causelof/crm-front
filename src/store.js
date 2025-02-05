@@ -2,13 +2,11 @@ import { create } from "zustand";
 import { API_BASE_URL } from "./config";
 import axios from "axios";
 
-const useTabStore = create((set) => ({
-  activeTab: "about", // Текущий активный таб (по умолчанию 'about')
-  setActiveTab: (tab) => set({ activeTab: tab }),
-}));
 
 const useUserStore = create((set) => ({
-  userData: {}, // Начальное состояние
+  userData: {
+    files: {}
+  }, // Начальное состояние
   loading: false,
   error: null,
 
@@ -63,6 +61,75 @@ const useUserStore = create((set) => ({
       console.error("Ошибка сохранения данных пользователя:", error);
     }
   },
+
+  // Загрузка списка файлов пользователя
+  fetchUserFiles: async (userId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/patient/${userId}/files`);
+      set((state) => ({
+        userData: {
+          ...state.userData,
+          files: response.data,
+        },
+      }));
+    } catch (error) {
+      console.error("Ошибка загрузки файлов:", error);
+    }
+  },
+
+  // Загрузка файла
+  uploadFile: async (userId, fieldName, file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/patient/${userId}/files/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log(response.data)
+
+      // Добавляем загруженный файл в состояние
+      set((state) => ({
+        userData: {
+          ...state.userData,
+          files: {
+            ...state.userData.files,
+            [fieldName]: [...(state.userData.files[fieldName] || []), response.data],
+          },
+        },
+      }));
+    } catch (error) {
+      console.error("Ошибка загрузки файла:", error);
+    }
+  },
+
+  // Удаление файла
+  deleteFile: async (userId, fieldName, fileId) => {
+    try {
+      const response =  await axios.delete(`${API_BASE_URL}/patient/${userId}/files/${fileId}`);
+
+      console.log(response);
+      
+      // Удаляем файл из состояния
+      set((state) => ({
+        userData: {
+          ...state.userData,
+          files: {
+            ...state.userData.files,
+            [fieldName]: state.userData.files[fieldName]?.filter((file) => file.id !== fileId),
+          },
+        },
+      }));
+  
+    } catch (error) {
+      console.error("Ошибка удаления файла:", error);
+    }
+
+  },
+
 }));
 
 const useDescriptionStore = create((set) => ({
@@ -214,4 +281,4 @@ const calculateProgress = (userData) => {
 };
 
 
-export { useTabStore, useUserStore, useDescriptionStore, useDocumentStore };
+export { useUserStore, useDescriptionStore, useDocumentStore };

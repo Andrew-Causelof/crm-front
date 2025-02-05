@@ -3,8 +3,10 @@ import DocsArticle from '../common/DocsArticle';
 import Breadcrumbs from '../common/Breadcrumbs';
 import DocumentUploaderWithActions from '../common/DocumentUploaderWithActions'
 import AsideInfo from '../common/AsideInfo';
+import ErrorBoundary from '../common/ErrorBoundary';
 
 export default function Docs() {
+
 
     const handlePrint = () => {
         console.log('Печать документа...');
@@ -25,11 +27,14 @@ export default function Docs() {
                 <div className="content_body">
 
                     <DocsArticle article='Основные документы'>
-                        <DocumentUploader
-                            fieldName="passport"
-                            title="Копия паспорта"
-                            notice="Далеко-далеко за словесными горами в стране гласных, и согласных живут рыбные тексты."
-                        />
+                        <ErrorBoundary>
+                            <DocumentUploader
+                                fieldName="passport"
+                                title="Копия паспорта"
+                                notice="Далеко-далеко за словесными горами в стране гласных, и согласных живут рыбные тексты."
+                            />
+                        </ErrorBoundary>
+
                         <DocumentUploader
                             fieldName="polis_files"
                             title="Страховой полис"
@@ -55,7 +60,7 @@ export default function Docs() {
                                 <span className="alert_icon"></span>
                             </div>
                             <DocumentUploader
-                                fieldName="passport_files"
+                                fieldName="general_files"
                                 title="Общий анализ крови с лейкоцитарной формулой и тромбоцитами + СОЭ"
                                 notice="Далеко-далеко за словесными горами в стране гласных, и согласных живут рыбные тексты."
                             />

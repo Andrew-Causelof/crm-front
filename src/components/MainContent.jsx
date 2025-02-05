@@ -1,4 +1,3 @@
-import React from "react";
 import About from "./MainContent/About";
 import Chat from "./MainContent/Chat";
 import Docs from "./MainContent/Docs";

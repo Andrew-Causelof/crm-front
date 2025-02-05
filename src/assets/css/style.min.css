@@ -1217,6 +1217,7 @@ body.noscroll {
   line-height: 1;
   border-bottom: 1px solid #1e7868;
   background: 0 0;
+  cursor: pointer;
 }
 .menu_item-active {
   background: #fff;
@@ -2924,6 +2925,7 @@ textarea.textarea-sm {
   flex-direction: column;
   gap: 12px;
   width: 170px;
+  overflow: hidden;
 }
 .files_item_icon {
   display: block;

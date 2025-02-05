@@ -6,7 +6,7 @@ export default function ProgressTab({ text, progress, active, onClick }) {
             className={`menu_item ${active ? 'menu_item-active' : ''}`}
             onClick={onClick} // Обработчик клика
         >
-            <a href="#" className="menu_link">
+            <a className="menu_link">
                 <span className="menu_link_status"></span>
                 <div className="menu_link_content">
                     <div className="menu_link_text">{text}</div>
