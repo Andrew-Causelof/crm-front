@@ -1,9 +1,13 @@
 import React from 'react';
+import { useUserStore } from '../store';
 
 function Header() {
+
+    const { userData, setUserData } = useUserStore();
+
     return (
         <header className="header gradient">
-            <a href="about.html" className="logo header_logo">
+            <a className="logo header_logo" onClick={() => setUserData('activeTab', 'about')}>
                 <div className="logo_img">
                     <img src="/assets/img/svg/logo.svg" alt="Logo" />
                 </div>
@@ -15,7 +19,7 @@ function Header() {
                 </div>
             </a>
             <div className="profile header_profile" tabIndex="0">
-                <div className="profile_text">Добронравов Олег Робертович</div>
+                <div className="profile_text">{`${userData.lastName} ${userData.firstname} ${userData.thirdname}`}</div>
                 <div className="profile_avatar">
                     <span>О</span>
                 </div>

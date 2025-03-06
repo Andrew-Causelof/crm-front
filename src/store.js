@@ -82,25 +82,36 @@ const useUserStore = create((set) => ({
     const formData = new FormData();
     formData.append("file", file);
 
-    
-
     try {
       const response = await axios.post(`${API_BASE_URL}/patient/${userId}/files/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log(response.data)
-
-      // Добавляем загруженный файл в состояние
-      set((state) => ({
-        userData: {
-          ...state.userData,
-          files: {
+      set((state) => {
+        // Обновляем только files
+        const updatedFiles = {
             ...state.userData.files,
             [fieldName]: [...(state.userData.files[fieldName] || []), response.data],
-          },
-        },
-      }));
+        };
+
+        // Создаем новое состояние с обновленными файлами
+        const updatedUserData = { 
+            ...state.userData, 
+            files: updatedFiles 
+        };
+
+        // Пересчитываем прогресс
+        const updatedProgress = calculateProgress(updatedUserData);
+
+        return {
+            userData: {
+                ...updatedUserData,
+                progress: updatedProgress,
+            },
+        };
+    });
+
+
     } catch (error) {
       console.error("Ошибка загрузки файла:", error);
     }
@@ -109,26 +120,36 @@ const useUserStore = create((set) => ({
   // Удаление файла
   deleteFile: async (userId, fieldName, fileId) => {
     try {
-      const response =  await axios.delete(`${API_BASE_URL}/patient/${userId}/files/${fileId}`);
+        await axios.delete(`${API_BASE_URL}/patient/${userId}/files/${fileId}`);
 
-      console.log(response);
-      
-      // Удаляем файл из состояния
-      set((state) => ({
-        userData: {
-          ...state.userData,
-          files: {
-            ...state.userData.files,
-            [fieldName]: state.userData.files[fieldName]?.filter((file) => file.id !== fileId),
-          },
-        },
-      }));
-  
+        set((state) => {
+            // Обновляем только files
+            const updatedFiles = {
+                ...state.userData.files,
+                [fieldName]: state.userData.files[fieldName]?.filter((file) => file.id !== fileId),
+            };
+
+            // Создаем новое состояние с обновленными файлами
+            const updatedUserData = { 
+                ...state.userData, 
+                files: updatedFiles 
+            };
+
+            // Пересчитываем прогресс
+            const updatedProgress = calculateProgress(updatedUserData);
+
+            return {
+                userData: {
+                    ...updatedUserData,
+                    progress: updatedProgress,
+                },
+            };
+        });
+
     } catch (error) {
-      console.error("Ошибка удаления файла:", error);
+        console.error("Ошибка удаления файла:", error);
     }
-
-  },
+},
 
 }));
 
@@ -253,15 +274,24 @@ const calculateProgress = (userData) => {
   const sections = {
     general: ["gender", "lastname", "firstname", "thirdname", "birthday", "height",  "weight", "phone", "phone2", "email", "polis", "polisRegion", "snils", "passport", "passportDate", "passportFrom", "city", "address"],
     medical: ["comment", "chronicDiseases", "diseaseList", "medications", "medicationList", "surgeries", "surgeriesComment", "alergy", "alergyList", "infection", "infectionList", "inheritanceDiseasesComment", "badHabbits", "badHabbitsList",  "pregnant", "sickLeave" ],
-    documents: ["passport", "insurance", "registration"],
+    documents: ["passport", "polis_files", "snils_files", "general_files", "coagulogram_files", "blood-biochemical_files", "blood-infectious_files", "blood-group_files", "blood-phenotyping_files", "urine-general_files", "covid_files"],
   };
 
   let progress = {};
 
   Object.keys(sections).forEach((section) => {
     const fields = sections[section];
+
     const filledFields = fields.filter((field) => {
-      const value = userData[field];
+      let value;
+
+      if (section === "documents") {
+        // Берем значения из userData.files (если оно есть)
+        value = userData.files?.[field];
+      } else {
+        // Остальные секции берем прямо из userData
+        value = userData[field];
+      }
 
       if (Array.isArray(value)) {
         return value.length > 0; // Проверяем, что массив не пустой

@@ -2941,6 +2941,9 @@ textarea.textarea-sm {
 }
 .files_item_title {
   color: #59677d;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .files_item_del {
   color: #df3353;

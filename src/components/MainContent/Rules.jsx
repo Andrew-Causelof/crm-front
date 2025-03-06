@@ -7,10 +7,11 @@ export default function Rules() {
         <main className="main">
             <div className="content">
                 <div className="content_head">
-                     <Breadcrumbs current='Правила при госпитализации' />
+                    <Breadcrumbs current='Правила при госпитализации' />
                     <div className="title title-page">Правила при госпитализации</div>
                 </div>
                 <div className="content_body">
+
                     <article className="article">
                         <div className="article_head">
                             <div className="title title-article">Общие требования</div>
@@ -22,9 +23,9 @@ export default function Rules() {
                                     <div className="text_item_content">
                                         <p>
                                             <b>Обязательное выполнение всех пунктов перед госпитализацией.</b><br />
-                                            В случае отсутствия каких-либо документов из перечня, госпитализация
-                                            невозможна.
                                         </p>
+                                        В случае отсутствия каких-либо документов из перечня, госпитализация
+                                        невозможна.
                                     </div>
                                 </div>
                                 <div className="text_item">
@@ -94,6 +95,7 @@ export default function Rules() {
                             </div>
                         </div>
                     </article>
+
                     <article className="article">
                         <div className="article_head">
                             <div className="title title-article">Порядок действий при госпитализации</div>
@@ -157,6 +159,7 @@ export default function Rules() {
                             </div>
                         </div>
                     </article>
+
                     <article className="article">
                         <div className="article_head">
                             <div className="title title-article">В день госпитализации</div>
@@ -182,8 +185,7 @@ export default function Rules() {
                                             <li>Полис ОМС</li>
                                             <li>СНИЛС</li>
                                             <li>Направление 057у</li>
-                                            <li>
-                                                Оригиналы всех анализов и обследований с печатями и подписями врачей.
+                                            <li>Оригиналы всех анализов и обследований с печатями и подписями врачей.
                                             </li>
                                         </ul>
                                     </div>
@@ -246,7 +248,7 @@ export default function Rules() {
                     </article>
                 </div>
             </div>
-            <AsideInfo title='Информация'/>
+            <AsideInfo title='Информация' />
         </main>
     )
 }
