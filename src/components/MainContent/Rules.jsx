@@ -1,18 +1,51 @@
 import React from 'react'
 import Breadcrumbs from '../common/Breadcrumbs';
 import AsideInfo from '../common/AsideInfo'
+import rules from '../../data/rules.json'
+
 
 export default function Rules() {
     return (
         <main className="main">
             <div className="content">
                 <div className="content_head">
-                    <Breadcrumbs current='Правила при госпитализации' />
-                    <div className="title title-page">Правила при госпитализации</div>
+                    <Breadcrumbs current={rules.title} />
+
+                    <div className="title title-page">{rules.title}</div>
                 </div>
                 <div className="content_body">
 
-                    <article className="article">
+                {rules.sections.map((section, sectionIndex) => (
+                        <article className="article" key={sectionIndex}>
+                            <div className="article_head">
+                                <div className="title title-article">{section.title}</div>
+                            </div>
+                            <div className="article_body">
+                                <div className="text_items">
+                                    {section.items.map((item, itemIndex) => (
+                                        <div className="text_item" key={itemIndex}>
+                                            <span className="text_item_count">{item.number}</span>
+                                            <div className="text_item_content">
+                                                <p>
+                                                    <b>{item.text}</b>{item.notice ? '\u00A0' + item.notice : ''}
+                                                </p>
+                                                {item.description && <p>{item.description}</p>}
+                                                {Array.isArray(item.list) && item.list.length > 0 && (
+                                                    <ul className="list">
+                                                        {item.list.map((listItem, listIndex) => (
+                                                            <li key={listIndex}>{listItem}</li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </article>
+                    ))}
+
+                    {/* <article className="article">
                         <div className="article_head">
                             <div className="title title-article">Общие требования</div>
                         </div>
@@ -245,7 +278,7 @@ export default function Rules() {
                                 </div>
                             </div>
                         </div>
-                    </article>
+                    </article> */}
                 </div>
             </div>
             <AsideInfo title='Информация' />
