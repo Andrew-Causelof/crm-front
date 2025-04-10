@@ -8,7 +8,7 @@ function FileRecomendation({ title = '', url }) {
       <div className="text_unit_title">{title}</div>
       <div className="text_unit_actions actions">
         <span className="print_btn"></span>
-        <a  href={url} className="pdf_btn"></a>
+        <a  href={url} className="pdf_btn" target="_blank"></a>
       </div>
     </div>
   )
