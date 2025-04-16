@@ -14,7 +14,7 @@ function AsideProgress({
 
     const handleSave = async () => {
         try {
-            await saveUserData(3);
+            await saveUserData(3); //@TODO Замените 3 на ID пользователя
             notyf.success('Данные обновлены успешно');
 
         } catch (error) {
